@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as fs from 'fs';
 import { AppController } from './app.controller';
@@ -7,6 +8,7 @@ import { DestinationsModule } from './destinations/destinations.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -14,9 +16,10 @@ import { DestinationsModule } from './destinations/destinations.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      ssl: {
-        ca: fs.readFileSync(process.env.SSL_CA_CERTIFICATES),
-      },
+      ssl:
+        process.env.NODE_ENV === 'production'
+          ? { ca: fs.readFileSync(process.env.SSL_CA_CERTIFICATES) }
+          : { rejectUnauthorized: false },
 
       autoLoadEntities: true,
 
