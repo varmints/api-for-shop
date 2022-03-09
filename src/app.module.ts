@@ -1,14 +1,39 @@
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
 import * as fs from 'fs';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { DestinationsModule } from './destinations/destinations.module';
+import { UsersModule } from './users/users.module';
+import { AddressesModule } from './addresses/addresses.module';
+import { ShopsModule } from './shops/shops.module';
+import { CouponsModule } from './coupons/coupons.module';
+import { ProductsModule } from './products/products.module';
+import { OrdersModule } from './orders/orders.module';
+import { SettingsModule } from './settings/settings.module';
+import { CategoriesModule } from './categories/categories.module';
+import { AttributesModule } from './attributes/attributes.module';
+import { TypesModule } from './types/types.module';
+import { TagsModule } from './tags/tags.module';
+import { UploadsModule } from './uploads/uploads.module';
+import { WithdrawsModule } from './withdraws/withdraws.module';
+import { TaxesModule } from './taxes/taxes.module';
+import { ShippingsModule } from './shippings/shippings.module';
+import { AnalyticsModule } from './analytics/analytics.module';
+import { ImportsModule } from './imports/imports.module';
+import { WalletsModule } from './wallets/wallets.module';
+import { RefundsModule } from './refunds/refunds.module';
+import { AuthorsModule } from './authors/authors.module';
+import { ManufacturersModule } from './manufacturers/manufacturers.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'schema.gql'),
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -28,9 +53,30 @@ import { DestinationsModule } from './destinations/destinations.module';
       // https://typeorm.io/#/migrations
       synchronize: true,
     }),
-    DestinationsModule,
+    UsersModule,
+    ProductsModule,
+    OrdersModule,
+    SettingsModule,
+    CouponsModule,
+    CategoriesModule,
+    AttributesModule,
+    AddressesModule,
+    ShopsModule,
+    TypesModule,
+    TagsModule,
+    UploadsModule,
+    // CommonModule,
+    WithdrawsModule,
+    TaxesModule,
+    ShippingsModule,
+    AnalyticsModule,
+    ImportsModule,
+    WalletsModule,
+    RefundsModule,
+    AuthorsModule,
+    ManufacturersModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
