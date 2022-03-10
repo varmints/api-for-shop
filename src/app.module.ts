@@ -31,8 +31,8 @@ import { ManufacturersModule } from './manufacturers/manufacturers.module';
     ConfigModule.forRoot(),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
-      debug: true,
-      playground: true,
+      debug: false,
+      playground: false,
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
