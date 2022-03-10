@@ -54,12 +54,12 @@ export class ResetPasswordInput {
   password: string;
 }
 
-@ObjectType({ isAbstract: true })
+@ObjectType()
 export class AuthResponse {
   token: string;
   permissions: string[];
 }
-@ObjectType({ isAbstract: true })
+@ObjectType()
 export class PasswordChangeResponse {
   success: boolean;
   message: string;
